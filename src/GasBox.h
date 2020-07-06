@@ -2,6 +2,10 @@
 #define __GASBOX_H__
 
 #include <vector>
+#include <cstdlib>
+#include <string>
+#include <iostream>
+
 #include <GasAtom.h>
 
 class GasBox{
@@ -24,11 +28,16 @@ class GasBox{
             double z_max
                ) : number_atoms(number_atoms), rng_seed(rng_seed),
                    x_min(x_min), x_max(x_max),
-                   y_min(y_max), 
+                   y_min(y_min), y_max(y_max),
+                   z_min(z_min), z_max(z_max) {
+                    // seeding the rng 
+                    srand(rng_seed);
+                   }
 
         
-
-
+    public:
+        void
+        initialize();
 };
 
 

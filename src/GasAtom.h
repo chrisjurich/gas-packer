@@ -4,6 +4,7 @@
 #include<string>
 #include<vector>
 #include<cmath>
+#include<iostream>
 
 struct Position{
     // simple struct representing a position in x,y,z space
@@ -39,14 +40,14 @@ class GasAtom {
     public:
         double
         distance(const GasAtom&) const;
+     
+    friend std::ostream& operator<<(std::ostream& os, const GasAtom& GA)
+    {
+    os<<GA.atom_type<<" location ("<<GA.curr_pos.x<<","<<GA.curr_pos.y<<","<<GA.curr_pos.z<<")\n";
+    return os;
+}
 
 };
-
-
-
-
-
-
 
 
 #endif //__GASATOM_H__

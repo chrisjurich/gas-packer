@@ -1,15 +1,20 @@
-#include<GasAtom.h>
 #include<iostream>
 
-
+#include<GasBox.h>
 
 
 int main() {
     
-    auto GA1 = GasAtom(1,2,3,"Atom1");
-    auto GA2 = GasAtom(0,0,0,"Atom2");
-
-    std::cout<<GA1.distance(GA2)<<std::endl;
-    
+    auto gb = GasBox(
+                    10, // number atoms
+                    10, // rng seed
+                    0., // x min
+                    10., // x max
+                    0., // y min
+                    10., // y max
+                    0., // z min
+                    10. // z max
+                    );
+    gb.initialize();
 
 }
