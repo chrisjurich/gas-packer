@@ -6,7 +6,7 @@
 int main() {
     
     auto gb = GasBox(
-                    10, // number atoms
+                    1000, // number atoms
                     10, // rng seed
                     0., // x min
                     10., // x max

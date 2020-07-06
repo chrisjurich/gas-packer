@@ -5,17 +5,21 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include <unordered_map>
 
 #include <GasAtom.h>
+#include <gb_utils.h>
 
 class GasBox{
     private:
-        double x_min, x_max, y_min, y_max, z_min, z_max;
+        Dimensions box_dims;
     private:
         int number_atoms, rng_seed;
     private:
         std::vector<GasAtom> atoms;
-    
+    private:
+        std::unordered_map<std::pair<int,int>,double> last_distances;
+
     public:
         GasBox(
             int number_atoms,
@@ -27,17 +31,29 @@ class GasBox{
             double z_min,
             double z_max
                ) : number_atoms(number_atoms), rng_seed(rng_seed),
-                   x_min(x_min), x_max(x_max),
-                   y_min(y_min), y_max(y_max),
-                   z_min(z_min), z_max(z_max) {
+                    box_dims(Dimensions(x_min,
+                                        x_max,
+                                        y_min,
+                                        y_max,
+                                        z_min,
+                                        z_max))
+                   {
                     // seeding the rng 
                     srand(rng_seed);
+                    // reserving the appropriate size for the last_distances umap
+                    last_distances.reserve(
+                        number_atoms*(number_atoms-1)/2
+                            );
                    }
 
         
     public:
         void
         initialize();
+    
+    public:
+        void
+        caluclate_distances();
 };
 
 

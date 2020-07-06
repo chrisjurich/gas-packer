@@ -9,19 +9,42 @@
 void
 GasBox::initialize() {
     // initializes the GasAtom vector
-
     for(auto atom_num = 0; atom_num < number_atoms; ++atom_num){
         // time to generate the random (x,y,z) points for the atoms
         // first x 
-        const auto x = (static_cast<double>(rand())/RAND_MAX)*(x_max-x_min) + x_min;
+        const auto x = (static_cast<double>(rand())/RAND_MAX)*(box_dims.x_max-box_dims.x_min) + box_dims.x_min;
         // then y 
-        const auto y = (static_cast<double>(rand()) /RAND_MAX)*(y_max-y_min) + y_min;
+        const auto y = (static_cast<double>(rand()) /RAND_MAX)*(box_dims.y_max-box_dims.y_min) + box_dims.y_min;
         // then z
-        const auto z = (static_cast<double>(rand())/RAND_MAX)*(z_max-z_min) + z_min;
+        const auto z = (static_cast<double>(rand())/RAND_MAX)*(box_dims.z_max-box_dims.z_min) + box_dims.z_min;
         // now make the GasAtomObject
-        atoms.emplace_back(x,y,z,"atom_" + std::to_string(atom_num +1));
+        atoms.emplace_back(x,y,z,box_dims,atom_num);
     }
-
+   
+    caluclate_distances();
+    auto max_dist(0.);
+    for(const auto& p : last_distances) {
+        max_dist=std::max(max_dist, p.second);
+    }
+    std::cout<<max_dist<<std::endl; 
+    return;
     for(const auto& a : atoms)
         std::cout<<a;
+}
+
+void
+GasBox::caluclate_distances() {
+    // helper method that finds the cross distances between all the points 
+    for(auto first_index = 0; first_index < number_atoms; ++first_index) {
+        for(auto second_index = 0; second_index < number_atoms; ++second_index) {
+            if(first_index != second_index){
+                const auto lower_index = std::min(first_index,second_index);
+                const auto upper_index = std::max(first_index,second_index);
+                last_distances[
+                    {lower_index,upper_index}
+                    ] = atoms[lower_index].distance(atoms[upper_index]);
+            } 
+        }
+    }
+
 }
