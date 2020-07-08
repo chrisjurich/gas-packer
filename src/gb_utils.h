@@ -3,6 +3,9 @@
 #include <utility>
 #include <functional>
 
+static const double epsilon(1.);
+static const double r_m(1.);
+
 namespace std {
     template <typename T1,typename T2> 
     struct hash<pair<T1,T2>>  {

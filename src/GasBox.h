@@ -9,6 +9,7 @@
 
 #include <GasAtom.h>
 #include <gb_utils.h>
+#include <LJPotential.h>
 
 class GasBox{
     private:
@@ -19,7 +20,8 @@ class GasBox{
         std::vector<GasAtom> atoms;
     private:
         std::unordered_map<std::pair<int,int>,double> last_distances;
-
+    private:
+        LennardJonesPotential lj_potential;
     public:
         GasBox(
             int number_atoms,
@@ -36,7 +38,8 @@ class GasBox{
                                         y_min,
                                         y_max,
                                         z_min,
-                                        z_max))
+                                        z_max)),
+                    lj_potential(r_m,epsilon)
                    {
                     // seeding the rng 
                     srand(rng_seed);
@@ -54,6 +57,10 @@ class GasBox{
     public:
         void
         caluclate_distances();
+
+    private:
+        void
+        _move_atoms();
 };
 
 

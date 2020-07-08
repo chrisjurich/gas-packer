@@ -41,3 +41,27 @@ GasAtom::distance(const GasAtom& other) const {
 
 }
 
+void
+GasAtom::_apply_bounds() {
+    // dealing with x dimensions 
+    if(curr_pos.x > dimensions.x_max) {
+        curr_pos.x += (dimensions.x_min - dimensions.x_max);
+    }
+    if(curr_pos.x < dimensions.x_min) {
+        curr_pos.x += (dimensions.x_max - dimensions.x_min);
+    }
+    // dealing with y dimensions 
+    if(curr_pos.y > dimensions.y_max) {
+        curr_pos.y += (dimensions.y_min - dimensions.y_max);
+    }
+    if(curr_pos.y < dimensions.y_min) {
+        curr_pos.y += (dimensions.y_max - dimensions.y_min);
+    }
+    // dealing with z dimensions 
+    if(curr_pos.z > dimensions.z_max) {
+        curr_pos.z += (dimensions.z_min - dimensions.z_max);
+    }
+    if(curr_pos.z < dimensions.z_min) {
+        curr_pos.z += (dimensions.z_max - dimensions.z_min);
+    }
+}

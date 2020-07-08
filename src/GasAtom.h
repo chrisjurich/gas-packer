@@ -18,6 +18,13 @@ struct Position{
             double z=0.
             ) : x(x), y(y), z(z) {}
 
+    void
+    operator+=(const Position& other) {
+        
+        x += other.x;
+        y += other.y;
+        z += other.z;
+    }
 };
 
 
@@ -45,12 +52,32 @@ class GasAtom {
     public:
         double
         distance(const GasAtom&) const;
-     
+
+    public:
+        void
+        operator+=(const GasAtom& other) {
+            past_position.push_back(curr_pos); 
+            curr_pos += other.curr_pos;
+            _apply_bounds();
+        }
+    
+    public:
+        void
+        operator+=(const Position& pos) {
+            past_position.push_back(curr_pos); 
+            curr_pos += pos;
+            _apply_bounds();
+        }
+
+    private:
+        void
+        _apply_bounds();
+
     friend std::ostream& operator<<(std::ostream& os, const GasAtom& GA)
     {
-    os<<"atom id: "<<GA.atom_id<<" location ("<<GA.curr_pos.x<<","<<GA.curr_pos.y<<","<<GA.curr_pos.z<<")\n";
-    return os;
-}
+        os<<"atom id: "<<GA.atom_id<<" location ("<<GA.curr_pos.x<<","<<GA.curr_pos.y<<","<<GA.curr_pos.z<<")\n";
+        return os;
+    }
 
 };
 
