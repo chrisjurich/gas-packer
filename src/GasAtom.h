@@ -25,6 +25,18 @@ struct Position{
         y += other.y;
         z += other.z;
     }
+    
+    Position
+    operator+(const Position& other) {
+        return Position(
+                x + other.x,
+                y + other.y,
+                z + other.z
+                );
+    }
+
+    void
+    apply_bounds(const Dimensions&); 
 };
 
 
@@ -54,6 +66,14 @@ class GasAtom {
         distance(const GasAtom&) const;
 
     public:
+        double
+        distance(const Position&) const;
+
+    public:
+        Position
+        proposed_move(const Position&) const;
+
+    public:
         void
         operator+=(const GasAtom& other) {
             past_position.push_back(curr_pos); 
@@ -67,6 +87,12 @@ class GasAtom {
             past_position.push_back(curr_pos); 
             curr_pos += pos;
             _apply_bounds();
+        }
+
+    public:
+        Position
+        get_position() {
+            return curr_pos;
         }
 
     private:

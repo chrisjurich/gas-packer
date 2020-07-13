@@ -48,3 +48,31 @@ GasBox::caluclate_distances() {
     }
 
 }
+
+void
+GasBox::_move_atoms() {
+    
+    const auto num_atoms = atoms.size();
+    for(auto atom_it = 0; atom_it<num_atoms; ++atom_it){
+        caluclate_distances(); 
+        // calculate original energy 
+        auto energy = double(0);
+        for(const auto& index_pair_distance : last_distances) {
+            if (atom_it == index_pair_distance.first.first or
+                    atom_it == index_pair_distance.first.second ) {
+                energy += lj_potential.energy(
+                    atoms[index_pair_distance.first.first],
+                    atoms[index_pair_distance.first.second]
+                        );
+            }
+        
+        }
+        auto atom_move = Position(
+                                    (static_cast<double>(rand())/RAND_MAX)*1. - 2.,
+                                    (static_cast<double>(rand())/RAND_MAX)*1. - 2.,
+                                    (static_cast<double>(rand())/RAND_MAX)*1. - 2.
+                                    );
+        
+    }
+
+}

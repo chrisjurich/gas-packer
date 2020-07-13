@@ -1,5 +1,6 @@
 #ifndef __GB_UTILS_H__
 #define __GB_UTILS_H__
+
 #include <utility>
 #include <functional>
 
