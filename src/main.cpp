@@ -15,6 +15,9 @@ int main() {
                     0., // z min
                     10. // z max
                     );
+    std::cout<<"created"<<std::endl; 
     gb.initialize();
-
+    std::cout<<"Initizlized"<<std::endl;
+    gb.simulate(1);
+    std::cout<<"simulated one step"<<std::endl;
 }

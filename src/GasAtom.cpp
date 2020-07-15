@@ -1,13 +1,5 @@
-
-
-
-
-
-
-
-
-
 #include<GasAtom.h>
+
 void
 Position::apply_bounds(const Dimensions& dimensions) {
 
@@ -31,8 +23,6 @@ Position::apply_bounds(const Dimensions& dimensions) {
         if(z < dimensions.z_min) {
             z += (dimensions.z_max - dimensions.z_min);
         }
-
-
     }
 
 double
@@ -88,17 +78,24 @@ GasAtom::distance(const Position& pos) const {
             dimensions.z_max - upper_z + lower_z - dimensions.z_min
             );
     return std::pow(
-            std::pow(x_dist,2.) +
+            std::pow(x_dist, 2.) +
             std::pow(y_dist, 2.) +
             std::pow(z_dist, 2.) 
             ,
             0.5);
 }
 
-Position
+GasAtom
 GasAtom::proposed_move(const Position& other) const {
+    auto proposed = GasAtom(
+                        curr_pos.x + other.x,
+                        curr_pos.y + other.y,
+                        curr_pos.z + other.z,
+                        dimensions,
+                        -1
+                        );
 
-return Position{};
+    return proposed;
 }
 
 

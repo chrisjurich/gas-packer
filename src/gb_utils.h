@@ -4,8 +4,10 @@
 #include <utility>
 #include <functional>
 
+// constants
 static const double epsilon(1.);
 static const double r_m(1.);
+static const double e(2.7182818284590452353602874);
 
 namespace std {
     template <typename T1,typename T2> 

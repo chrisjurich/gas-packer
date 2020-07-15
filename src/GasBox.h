@@ -10,6 +10,7 @@
 #include <GasAtom.h>
 #include <gb_utils.h>
 #include <LJPotential.h>
+#include <Metropolis.h>
 
 class GasBox{
     private:
@@ -22,6 +23,8 @@ class GasBox{
         std::unordered_map<std::pair<int,int>,double> last_distances;
     private:
         LennardJonesPotential lj_potential;
+    private:
+        MetropolisSelector mc_selector;
     public:
         GasBox(
             int number_atoms,
@@ -39,7 +42,8 @@ class GasBox{
                                         y_max,
                                         z_min,
                                         z_max)),
-                    lj_potential(r_m,epsilon)
+                    lj_potential(r_m,epsilon),
+                    mc_selector(MetropolisSelector())
                    {
                     // seeding the rng 
                     srand(rng_seed);
@@ -57,6 +61,10 @@ class GasBox{
     public:
         void
         caluclate_distances();
+    
+    public:
+        void
+        simulate(int);
 
     private:
         void

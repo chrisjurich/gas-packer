@@ -22,14 +22,14 @@ GasBox::initialize() {
     }
    
     caluclate_distances();
-    auto max_dist(0.);
-    for(const auto& p : last_distances) {
-        max_dist=std::max(max_dist, p.second);
-    }
-    std::cout<<max_dist<<std::endl; 
-    return;
-    for(const auto& a : atoms)
-        std::cout<<a;
+    //auto max_dist(0.);
+    //for(const auto& p : last_distances) {
+    //    max_dist=std::max(max_dist, p.second);
+    //}
+    ////std::cout<<max_dist<<std::endl; 
+    ////return;
+    //for(const auto& a : atoms)
+    //    std::cout<<a;
 }
 
 void
@@ -56,7 +56,7 @@ GasBox::_move_atoms() {
     for(auto atom_it = 0; atom_it<num_atoms; ++atom_it){
         caluclate_distances(); 
         // calculate original energy 
-        auto energy = double(0);
+        auto energy = double(0.);
         for(const auto& index_pair_distance : last_distances) {
             if (atom_it == index_pair_distance.first.first or
                     atom_it == index_pair_distance.first.second ) {
@@ -67,12 +67,40 @@ GasBox::_move_atoms() {
             }
         
         }
-        auto atom_move = Position(
-                                    (static_cast<double>(rand())/RAND_MAX)*1. - 2.,
-                                    (static_cast<double>(rand())/RAND_MAX)*1. - 2.,
-                                    (static_cast<double>(rand())/RAND_MAX)*1. - 2.
-                                    );
         
+        const auto atom_move = Position(
+                                    (static_cast<double>(rand())/RAND_MAX)*2. - 1.,
+                                    (static_cast<double>(rand())/RAND_MAX)*2. - 1.,
+                                    (static_cast<double>(rand())/RAND_MAX)*2. - 1.
+                                    );
+        auto candidate_energy = double(0.); 
+        const auto proposed = atoms[atom_it].proposed_move(atom_move);
+        
+        for(auto other_it = 0; other_it < num_atoms; ++other_it) {
+            if(other_it == atom_it) {
+                continue;     
+            }
+            candidate_energy += lj_potential.energy(
+                    proposed.distance(atoms[other_it])
+                    );
+
+        }
+
+        if(candidate_energy < energy) {
+            atoms[atom_it] += atom_move;         
+        } else if (mc_selector.accept_move(candidate_energy/energy)){
+            atoms[atom_it] += atom_move;
+        }
     }
 
 }
+
+void
+GasBox::simulate(int number_steps) {
+    for(int step = 0; step<number_steps; ++step) {
+        _move_atoms();
+    
+    }
+
+}
+

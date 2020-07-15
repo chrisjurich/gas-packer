@@ -60,7 +60,9 @@ class GasAtom {
                 double z,
                 const Dimensions& dimensions,
                 unsigned int atom_id 
-               ) : atom_id(atom_id), dimensions(dimensions),curr_pos(Position(x,y,z)) {}
+               ) : atom_id(atom_id), dimensions(dimensions), curr_pos(Position(x,y,z)) {
+            _apply_bounds();
+        }
     public:
         double
         distance(const GasAtom&) const;
@@ -70,7 +72,7 @@ class GasAtom {
         distance(const Position&) const;
 
     public:
-        Position
+        GasAtom 
         proposed_move(const Position&) const;
 
     public:

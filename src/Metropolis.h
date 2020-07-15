@@ -1,20 +1,22 @@
 #ifndef __METROPOLIS_H__
 #define __METROPOLIS_H__
 
+#include <cstdlib>
 #include <cmath>
+
+#include <gb_utils.h>
 
 class MetropolisSelector{
     
     public:
         //constructor
-        MetropolisSelector();
+        MetropolisSelector() {
+
+        }
 
     public:
         bool
-        accept_move() {
-
-            return False;
-        }
+        accept_move(double);
 
     
 
