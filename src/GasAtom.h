@@ -18,6 +18,15 @@ struct Position{
             double z=0.
             ) : x(x), y(y), z(z) {}
 
+   
+    std::string
+    to_string() const {
+        return std::to_string(x) + "|" + std::to_string(y) + "|" + std::to_string(z);
+    }
+
+    void
+    apply_bounds(const Dimensions&); 
+
     void
     operator+=(const Position& other) {
         
@@ -34,9 +43,6 @@ struct Position{
                 z + other.z
                 );
     }
-
-    void
-    apply_bounds(const Dimensions&); 
 };
 
 
@@ -63,6 +69,7 @@ class GasAtom {
                ) : atom_id(atom_id), dimensions(dimensions), curr_pos(Position(x,y,z)) {
             _apply_bounds();
         }
+
     public:
         double
         distance(const GasAtom&) const;
@@ -74,6 +81,19 @@ class GasAtom {
     public:
         GasAtom 
         proposed_move(const Position&) const;
+    
+    public:
+        unsigned int
+        id() const {
+            return atom_id;
+        }
+
+    
+    public:
+        std::vector<Position>
+        positions() const {
+            return past_position;
+        }
 
     public:
         void
@@ -96,7 +116,7 @@ class GasAtom {
         get_position() {
             return curr_pos;
         }
-
+    
     private:
         void
         _apply_bounds();

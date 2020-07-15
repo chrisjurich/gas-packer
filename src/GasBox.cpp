@@ -50,11 +50,37 @@ GasBox::caluclate_distances() {
 }
 
 void
+GasBox::to_csv(const std::string file_path) {
+    
+    auto outfile = std::ofstream(file_path);
+    auto positions = std::vector<std::vector<Position>>();
+    outfile<<"move";
+    for(const auto& atom : atoms) {
+        outfile<<","<<atom.id();
+        positions.push_back(atom.positions());
+    }
+    outfile<<'\n';
+    const auto num_moves = positions[0].size();
+    for(auto move_it = 0; move_it < num_moves; ++ move_it) {
+        outfile<<move_it;
+        for(auto& col : positions) {
+            outfile<<','<<col[move_it].to_string(); 
+        }
+        outfile<<'\n';
+    }
+
+    outfile.close();
+
+}
+
+void
 GasBox::_move_atoms() {
     
-    const auto num_atoms = atoms.size();
+    const auto num_atoms = atoms.size(); 
+    auto moves = std::vector<Position>(num_atoms);
+    caluclate_distances(); 
     for(auto atom_it = 0; atom_it<num_atoms; ++atom_it){
-        caluclate_distances(); 
+        std::cout<<atom_it<<std::endl; 
         // calculate original energy 
         auto energy = double(0.);
         for(const auto& index_pair_distance : last_distances) {
@@ -86,11 +112,17 @@ GasBox::_move_atoms() {
 
         }
 
-        if(candidate_energy < energy) {
-            atoms[atom_it] += atom_move;         
+        if(candidate_energy <= energy) {
+            moves[atom_it] = atom_move;         
         } else if (mc_selector.accept_move(candidate_energy/energy)){
-            atoms[atom_it] += atom_move;
+            moves[atom_it] = atom_move;
+        } else {
+            moves[atom_it] = Position(0.,0.,0.);
         }
+    }
+
+    for(auto atom_it =0; atom_it<num_atoms; ++atom_it) {
+        atoms[atom_it] += moves[atom_it];
     }
 
 }

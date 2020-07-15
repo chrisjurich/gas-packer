@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <unordered_map>
+#include <fstream>
 
 #include <GasAtom.h>
 #include <gb_utils.h>
@@ -66,15 +67,14 @@ class GasBox{
         void
         simulate(int);
 
+    public:
+        void
+        to_csv(const std::string);
+
     private:
         void
         _move_atoms();
 };
-
-
-
-
-
 
 
 

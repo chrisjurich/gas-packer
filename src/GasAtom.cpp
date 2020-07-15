@@ -98,7 +98,6 @@ GasAtom::proposed_move(const Position& other) const {
     return proposed;
 }
 
-
 void
 GasAtom::_apply_bounds() {
     // dealing with x dimensions 
