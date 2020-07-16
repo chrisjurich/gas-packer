@@ -6,7 +6,7 @@
 int main() {
     
     auto gb = GasBox(
-                    1, // number atoms
+                    100, // number atoms
                     10, // rng seed
                     0., // x min
                     10., // x max
@@ -18,7 +18,7 @@ int main() {
     std::cout<<"created"<<std::endl; 
     gb.initialize();
     std::cout<<"Initizlized"<<std::endl;
-    gb.simulate(100);
+    gb.simulate(1000);
     std::cout<<"simulated one step"<<std::endl;
-    gb.to_csv("../data/test.csv");
+    gb.to_csv("../data/multiple_atoms.csv");
 }

@@ -18,7 +18,9 @@ GasBox::initialize() {
         // then z
         const auto z = (static_cast<double>(rand())/RAND_MAX)*(box_dims.z_max-box_dims.z_min) + box_dims.z_min;
         // now make the GasAtomObject
-        atoms.emplace_back(x,y,z,box_dims,atom_num);
+        atoms.emplace_back(5.,5.,5.,box_dims,atom_num);
+        
+        //atoms.emplace_back(x,y,z,box_dims,atom_num);
     }
    
     caluclate_distances();
@@ -80,7 +82,6 @@ GasBox::_move_atoms() {
     auto moves = std::vector<Position>(num_atoms);
     caluclate_distances(); 
     for(auto atom_it = 0; atom_it<num_atoms; ++atom_it){
-        std::cout<<atom_it<<std::endl; 
         // calculate original energy 
         auto energy = double(0.);
         for(const auto& index_pair_distance : last_distances) {
@@ -95,9 +96,9 @@ GasBox::_move_atoms() {
         }
         
         const auto atom_move = Position(
-                                    (static_cast<double>(rand())/RAND_MAX)*2. - 1.,
-                                    (static_cast<double>(rand())/RAND_MAX)*2. - 1.,
-                                    (static_cast<double>(rand())/RAND_MAX)*2. - 1.
+                                    (static_cast<double>(rand())/RAND_MAX)*0.2 - 0.1,
+                                    (static_cast<double>(rand())/RAND_MAX)*0.2 - 0.1,
+                                    (static_cast<double>(rand())/RAND_MAX)*0.2 - 0.1
                                     );
         auto candidate_energy = double(0.); 
         const auto proposed = atoms[atom_it].proposed_move(atom_move);
@@ -117,6 +118,7 @@ GasBox::_move_atoms() {
         } else if (mc_selector.accept_move(candidate_energy/energy)){
             moves[atom_it] = atom_move;
         } else {
+            std::cout<<"NO MOVE"<<std::endl;
             moves[atom_it] = Position(0.,0.,0.);
         }
     }

@@ -1,2 +1,2 @@
-g++-9 -c -I ../src/ ../src/*.cpp
-g++-9 *.o -o IGS
+g++-10 -c -I ../src/ ../src/*.cpp
+g++-10 *.o -o IGS
