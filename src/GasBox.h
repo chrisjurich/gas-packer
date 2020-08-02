@@ -26,6 +26,12 @@ class GasBox{
         LennardJonesPotential lj_potential;
     private:
         MetropolisSelector mc_selector;
+    private:
+        double move_distance;
+    private:
+        std::vector<BoxSnapShot> states;
+        //private:
+    //    double 
     public:
         GasBox(
             int number_atoms,
@@ -35,7 +41,8 @@ class GasBox{
             double y_min,
             double y_max,
             double z_min,
-            double z_max
+            double z_max,
+            double move_distance
                ) : number_atoms(number_atoms), rng_seed(rng_seed),
                     box_dims(Dimensions(x_min,
                                         x_max,
@@ -44,7 +51,8 @@ class GasBox{
                                         z_min,
                                         z_max)),
                     lj_potential(r_m,epsilon),
-                    mc_selector(MetropolisSelector())
+                    mc_selector(MetropolisSelector()),
+                    move_distance(move_distance)
                    {
                     // seeding the rng 
                     srand(rng_seed);
@@ -70,10 +78,11 @@ class GasBox{
     public:
         void
         to_csv(const std::string);
-
+    
     private:
         void
         _move_atoms();
+
 };
 
 

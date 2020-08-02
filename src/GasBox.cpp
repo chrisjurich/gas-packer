@@ -78,6 +78,8 @@ GasBox::to_csv(const std::string file_path) {
 void
 GasBox::_move_atoms() {
     
+    auto snapshot = BoxSnapShot();
+
     const auto num_atoms = atoms.size(); 
     auto moves = std::vector<Position>(num_atoms);
     caluclate_distances(); 
@@ -96,9 +98,9 @@ GasBox::_move_atoms() {
         }
         
         const auto atom_move = Position(
-                                    (static_cast<double>(rand())/RAND_MAX)*0.2 - 0.1,
-                                    (static_cast<double>(rand())/RAND_MAX)*0.2 - 0.1,
-                                    (static_cast<double>(rand())/RAND_MAX)*0.2 - 0.1
+                                    move_distance*((static_cast<double>(rand())/RAND_MAX)*2. - 1.),
+                                    move_distance*((static_cast<double>(rand())/RAND_MAX)*2. - 1.),
+                                    move_distance*((static_cast<double>(rand())/RAND_MAX)*2. - 1.)
                                     );
         auto candidate_energy = double(0.); 
         const auto proposed = atoms[atom_it].proposed_move(atom_move);
@@ -114,11 +116,14 @@ GasBox::_move_atoms() {
         }
 
         if(candidate_energy <= energy) {
+            snapshot.accepted_moves += 1;
             moves[atom_it] = atom_move;         
         } else if (mc_selector.accept_move(candidate_energy/energy)){
+            snapshot.accepted_moves += 1;
             moves[atom_it] = atom_move;
         } else {
             std::cout<<"NO MOVE"<<std::endl;
+            snapshot.rejected_moves += 1;
             moves[atom_it] = Position(0.,0.,0.);
         }
     }
@@ -126,7 +131,8 @@ GasBox::_move_atoms() {
     for(auto atom_it =0; atom_it<num_atoms; ++atom_it) {
         atoms[atom_it] += moves[atom_it];
     }
-
+    
+    states.push_back(snapshot);
 }
 
 void

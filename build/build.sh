@@ -1,2 +1,2 @@
-g++-10 -c -I ../src/ ../src/*.cpp
-g++-10 *.o -o IGS
+g++-10 -std=c++17 -c -I ../src/ ../src/*.cpp
+g++-10 -std=c++17 *.o -o IGS

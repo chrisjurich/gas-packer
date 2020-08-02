@@ -4,8 +4,10 @@
 
 double
 LennardJonesPotential::energy(const double distance) const {
-    if (distance < 0.0000001) {
-        return std::numeric_limits<double>::max();
+    if (distance < vdw_radius) {
+        return 4*ep*(
+                std::pow(r_m/vdw_radius,12.) - std::pow(r_m/vdw_radius,6.)
+                );
     }
     return 4*ep*(
             std::pow(r_m/distance,12.) - std::pow(r_m/distance,6.)
