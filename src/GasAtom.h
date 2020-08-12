@@ -1,12 +1,12 @@
 #ifndef __GASATOM_H__
 #define __GASATOM_H__
 
-#include<string>
-#include<vector>
-#include<cmath>
-#include<iostream>
+#include <string>
+#include <vector>
+#include <cmath>
+#include <iostream>
 
-#include<gb_utils.h>
+#include <gb_utils.h>
 
 struct Position{
     // simple struct representing a position in x,y,z space
