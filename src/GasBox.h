@@ -12,6 +12,7 @@
 #include <gb_utils.h>
 #include <LJPotential.h>
 #include <Metropolis.h>
+#include <GBConfig.h>
 
 class GasBox{
     private:
@@ -30,8 +31,8 @@ class GasBox{
         double move_distance;
     private:
         std::vector<BoxSnapShot> states;
-        //private:
-    //    double 
+    private: 
+        std::string outfile;
     public:
         GasBox(
             int number_atoms,
@@ -42,7 +43,8 @@ class GasBox{
             double y_max,
             double z_min,
             double z_max,
-            double move_distance
+            double move_distance,
+            std::string outfile
                ) : number_atoms(number_atoms), rng_seed(rng_seed),
                     box_dims(Dimensions(x_min,
                                         x_max,
@@ -52,7 +54,8 @@ class GasBox{
                                         z_max)),
                     lj_potential(r_m,epsilon),
                     mc_selector(MetropolisSelector()),
-                    move_distance(move_distance)
+                    move_distance(move_distance),
+                    outfile(outfile)
                    {
                     // seeding the rng 
                     srand(rng_seed);
@@ -61,7 +64,30 @@ class GasBox{
                         number_atoms*(number_atoms-1)/2
                             );
                    }
-
+        
+        GasBox(const GasBoxConfig& config) :
+                number_atoms(config.num_atoms),
+                rng_seed(config.rng_seed),
+                box_dims(Dimensions(
+                                    config.x_min,
+                                    config.x_max,
+                                    config.y_min,
+                                    config.y_max,
+                                    config.z_min,
+                                    config.z_max)),
+                lj_potential(r_m,epsilon),
+                mc_selector(MetropolisSelector()),
+                move_distance(config.move_dist),
+                outfile(config.outfile)
+                {
+                    // seeding the rng 
+                    srand(rng_seed);
+                    // reserving the appropriate size for the last_distances umap
+                    last_distances.reserve(
+                        number_atoms*(number_atoms-1)/2
+                            );
+            
+                }
         
     public:
         void
@@ -77,7 +103,7 @@ class GasBox{
 
     public:
         void
-        to_csv(const std::string);
+        to_csv();
     
     private:
         void

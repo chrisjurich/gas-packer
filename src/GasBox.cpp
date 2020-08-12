@@ -14,7 +14,7 @@ GasBox::initialize() {
         // first x 
         const auto x = (static_cast<double>(rand())/RAND_MAX)*(box_dims.x_max-box_dims.x_min) + box_dims.x_min;
         // then y 
-        const auto y = (static_cast<double>(rand()) /RAND_MAX)*(box_dims.y_max-box_dims.y_min) + box_dims.y_min;
+        const auto y = (static_cast<double>(rand())/RAND_MAX)*(box_dims.y_max-box_dims.y_min) + box_dims.y_min;
         // then z
         const auto z = (static_cast<double>(rand())/RAND_MAX)*(box_dims.z_max-box_dims.z_min) + box_dims.z_min;
         // now make the GasAtomObject
@@ -52,26 +52,26 @@ GasBox::caluclate_distances() {
 }
 
 void
-GasBox::to_csv(const std::string file_path) {
+GasBox::to_csv() {
     
-    auto outfile = std::ofstream(file_path);
+    auto out = std::ofstream(outfile);
     auto positions = std::vector<std::vector<Position>>();
-    outfile<<"move";
+    out<<"move";
     for(const auto& atom : atoms) {
-        outfile<<","<<atom.id();
+        out<<","<<atom.id();
         positions.push_back(atom.positions());
     }
-    outfile<<'\n';
+    out<<'\n';
     const auto num_moves = positions[0].size();
     for(auto move_it = 0; move_it < num_moves; ++ move_it) {
-        outfile<<move_it;
+        out<<move_it;
         for(auto& col : positions) {
-            outfile<<','<<col[move_it].to_string(); 
+            out<<','<<col[move_it].to_string(); 
         }
-        outfile<<'\n';
+        out<<'\n';
     }
 
-    outfile.close();
+    out.close();
 
 }
 
@@ -102,6 +102,7 @@ GasBox::_move_atoms() {
                                     move_distance*((static_cast<double>(rand())/RAND_MAX)*2. - 1.),
                                     move_distance*((static_cast<double>(rand())/RAND_MAX)*2. - 1.)
                                     );
+        std::cout<<atom_move.x<<","<<atom_move.y<<","<<atom_move.z<<std::endl;
         auto candidate_energy = double(0.); 
         const auto proposed = atoms[atom_it].proposed_move(atom_move);
         

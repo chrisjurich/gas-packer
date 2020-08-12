@@ -1,18 +1,21 @@
 #ifndef __GB_CONFIG_H__
 #define __GB_CONFIG_H__
+
 #include<string>
 #include<iostream>
 
 struct GasBoxConfig {
-    int num_atoms;
-    int rng_seed;
-    double x_min;
-    double x_max;
-    double y_min;
-    double y_max;
-    double z_min;
-    double z_max;
-    double move_dist;
+    std::string outfile = "NA";
+    int num_atoms = 100;
+    int rng_seed = 1835135135;
+    int num_moves = 1000; 
+    double x_min = 0.;
+    double x_max = 10.;
+    double y_min = 0.;
+    double y_max = 0.;
+    double z_min = 0.;
+    double z_max = 10.;
+    double move_dist = 1;
 
  
     void
