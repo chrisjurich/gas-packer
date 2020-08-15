@@ -36,7 +36,7 @@ struct Position{
     }
     
     Position
-    operator+(const Position& other) {
+    operator+(const Position& other) const {
         return Position(
                 x + other.x,
                 y + other.y,
