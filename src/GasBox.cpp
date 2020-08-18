@@ -74,6 +74,19 @@ GasBox::to_csv() {
     out.close();
 
 }
+std::vector<std::vector<Position>>
+GasBox::moves() {
+    auto positions = std::vector<std::vector<Position>>();
+    positions.reserve(atoms.size()); 
+    
+    for(const auto& atom : atoms ) {
+        positions.push_back(atom.positions());
+
+    }
+
+    return positions;
+}
+
 
 void
 GasBox::_move_atoms() {
@@ -102,7 +115,7 @@ GasBox::_move_atoms() {
                                     move_distance*((static_cast<double>(rand())/RAND_MAX)*2. - 1.),
                                     move_distance*((static_cast<double>(rand())/RAND_MAX)*2. - 1.)
                                     );
-        std::cout<<atom_move.x<<","<<atom_move.y<<","<<atom_move.z<<std::endl;
+        
         auto candidate_energy = double(0.); 
         const auto proposed = atoms[atom_it].proposed_move(atom_move);
         
@@ -123,7 +136,6 @@ GasBox::_move_atoms() {
             snapshot.accepted_moves += 1;
             moves[atom_it] = atom_move;
         } else {
-            std::cout<<"NO MOVE"<<std::endl;
             snapshot.rejected_moves += 1;
             moves[atom_it] = Position(0.,0.,0.);
         }

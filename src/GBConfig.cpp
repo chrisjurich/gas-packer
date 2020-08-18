@@ -44,8 +44,7 @@ GasBoxConfig::parse_command_line(int argc,char** argv) {
         else if (option.find("ymin") != not_found)
         {
             y_min = std::stod(token);
-        } 
-        else if (option.find("ymax") != not_found)
+        } else if (option.find("ymax") != not_found)
         {
             y_max = std::stod(token);
         } 

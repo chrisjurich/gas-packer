@@ -5,19 +5,31 @@
 #include<iostream>
 
 struct GasBoxConfig {
-    std::string outfile = "NA";
-    int num_atoms = 100;
-    int rng_seed = 1835135135;
-    int num_moves = 1000; 
-    double x_min = 0.;
-    double x_max = 10.;
-    double y_min = 0.;
-    double y_max = 0.;
-    double z_min = 0.;
-    double z_max = 10.;
-    double move_dist = 1;
+    std::string outfile ;
+    int num_atoms ;
+    int rng_seed ; 
+    int num_moves ;
+    double x_min ;
+    double x_max ;
+    double y_min ;
+    double y_max ;
+    double z_min ;
+    double z_max ;
+    double move_dist ;
 
  
+    GasBoxConfig() :
+        outfile("NA"),
+        num_atoms(100),
+        rng_seed(1835135135),
+        num_moves(1000),
+        x_min(0.),
+        x_max(10.),
+        y_min(0.),
+        y_max(0.),
+        z_min(0.),
+        z_max(10.),
+        move_dist(1) {}
     void
     parse_command_line(int,char**);
 };

@@ -65,7 +65,7 @@ class GasBox{
                             );
                    }
         
-        GasBox(const GasBoxConfig& config) :
+        GasBox(GasBoxConfig const& config) :
                 number_atoms(config.num_atoms),
                 rng_seed(config.rng_seed),
                 box_dims(Dimensions(
@@ -104,7 +104,11 @@ class GasBox{
     public:
         void
         to_csv();
-    
+    // for pybindings 
+    public:
+        std::vector<std::vector<Position>>
+        moves();
+
     private:
         void
         _move_atoms();

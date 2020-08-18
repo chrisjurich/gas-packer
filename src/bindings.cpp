@@ -1,11 +1,12 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 #include <pybind11/operators.h>
 #include <memory>
 
 #include <gb_utils.h>
 #include <GasAtom.h>
 #include <GasBox.h>
-
+#include <GBConfig.h>
 //static const double epsilon(1.);
 //static const double r_m(1.);
 //static const double e(2.7182818284590452353602874);
@@ -90,6 +91,21 @@ PYBIND11_MODULE(gas_packer, m) {
 //    }
 //
 //};
+    py::class_<GasBoxConfig,std::shared_ptr<GasBoxConfig>>(m,"GasBoxConfig")
+        .def(py::init<>())  
+        .def_readwrite("num_atoms",&GasBoxConfig::num_atoms)
+        .def_readwrite("rng_seed",&GasBoxConfig::rng_seed)
+        .def_readwrite("num_moves",&GasBoxConfig::num_moves)
+        .def_readwrite("outfile",&GasBoxConfig::outfile)
+        .def_readwrite("x_min",&GasBoxConfig::x_min)
+        .def_readwrite("x_max",&GasBoxConfig::x_max)
+        .def_readwrite("y_min",&GasBoxConfig::y_min)
+        .def_readwrite("y_max",&GasBoxConfig::y_max)
+        .def_readwrite("z_min",&GasBoxConfig::z_min)
+        .def_readwrite("z_max",&GasBoxConfig::z_max)
+        .def_readwrite("move_dist",&GasBoxConfig::move_dist)
+        ;
+    
     py::class_<GasBox,std::shared_ptr<GasBox>>(m,"GasBox")
         //ctors 
         .def(py::init<int,int,double,double,double,double,double,double,double,std::string>())
@@ -99,6 +115,7 @@ PYBIND11_MODULE(gas_packer, m) {
         .def("caluclate_distances",&GasBox::caluclate_distances)
         .def("simulate",&GasBox::simulate)
         .def("to_csv",&GasBox::to_csv)
+        .def("moves",&GasBox::moves)
         ;
 
 }

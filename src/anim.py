@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import mpl_toolkits.mplot3d.axes3d as p3
 import matplotlib.animation as animation
 
+from gas_packer import GasBoxConfig, GasBox
 
 def gas_positions(csv):
     df = pd.read_csv(csv)
@@ -17,12 +18,13 @@ def gas_positions(csv):
                         )
         atom_moves.append(np.array(row_coords))
     return atom_moves
+
 def animate_scatters(iteration, data, scatters):
     """
     Update the data held by the scatter plot and therefore animates it.
     Args:
         iteration (int): Current iteration of the animation
-        data (list): List of the data positions at each iteration.
+        data (list: List of the data positions at each iteration.
         scatters (list): List of all the scatters (One per element)
     Returns:
         list: List of scatters (One per element) with new coordinates
@@ -47,6 +49,13 @@ def add_outline(ax,start,end):
         ax.plot([start,start],[end,end],[start,end],c='black')
         ax.plot([end,end],[end,end],[start,end],c='black')
 
+def get_simulation_data(num_moves):
+    config = GasBoxConfig()
+    box = GasBox(config)
+    box.initialize()
+    box.simulate(num_moves)
+    return GasBoxConfig.num_atoms, box.moves()
+
 def main(data, save=False):
     """
     Creates the 3D figure and animates it with the input data.
@@ -54,6 +63,7 @@ def main(data, save=False):
         data (list): List of the data positions at each iteration.
         save (bool): Whether to save the recording of the animation. (Default to False).
     """
+    num_atoms, moves = get_simulation_data(10) # alternative way (target way actually) to get the data
     # Attaching 3D axis to the figure
     fig = plt.figure()
     ax = p3.Axes3D(fig)
@@ -102,7 +112,9 @@ def main(data, save=False):
     #plt.show()
 
 if __name__ == "__main__":
-    data = gas_positions("../data/multiple_atoms.csv")
 
-    #print(generate_data(1000, 2))
-    main(data, save=True)
+    main()
+    #data = gas_positions("../data/multiple_atoms.csv")
+
+    ##print(generate_data(1000, 2))
+    #main(data, save=True)
