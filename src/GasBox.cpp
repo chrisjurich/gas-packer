@@ -45,12 +45,12 @@ GasBox::setup_options() {
     app_.add_option("--z_min",config_.z_min)
         ->default_val(0.)
         ->check(CLI::Number)
-        ->description("The upper z bound of the gas box. MUST be smaller than z_max.");
+        ->description("The lower z bound of the gas box. MUST be smaller than z_max.");
 
     app_.add_option("--z_max",config_.z_max)
         ->default_val(10.)
         ->check(CLI::Number)
-        ->description("The lower z bound of the gas box. MUST be larger than z_min.");
+        ->description("The upper z bound of the gas box. MUST be larger than z_min.");
 
     app_.add_option("--move_dist",config_.move_dist)
         ->default_val(1.)

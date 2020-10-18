@@ -143,13 +143,13 @@ def setup_options():
                                                                   'Larger numbers will lead to slower runtimes.')
 
     parser.add_argument("-x_min", type=float, default=0., help='Lower x bound. MUST be less than x_max')
-    parser.add_argument("-x_max", type=float, default=10., help='Lower x bound. MUST be greater than x_min')
+    parser.add_argument("-x_max", type=float, default=10., help='Upper x bound. MUST be greater than x_min')
 
     parser.add_argument("-y_min", type=float, default=0., help='Lower y bound. MUST be less than y_max')
-    parser.add_argument("-y_max", type=float, default=10., help='Lower y bound. MUST be greater than y_min')
+    parser.add_argument("-y_max", type=float, default=10., help='Upper y bound. MUST be greater than y_min')
 
     parser.add_argument("-z_min", type=float, default=0., help='Lower z bound. MUST be less than z_max')
-    parser.add_argument("-z_max", type=float, default=10., help='Lower z bound. MUST be greater than z_min')
+    parser.add_argument("-z_max", type=float, default=10., help='Upper z bound. MUST be greater than z_min')
     parser.add_argument("-rng_seed", type=int, default=1835135135, help='The number to which the System\'s random '
                                                                         'number generator will be seeded')
     parser.add_argument("-num_moves", type=int, default=1000, help='The number of moves that each atom will make. '
