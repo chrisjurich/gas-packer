@@ -8,6 +8,12 @@ Using python is recommended as this allows the user to easily generate an .mp4 a
 
 Because this project uses pybind11 as a submodule, the cloning command is: `git clone --recurse-submodules https://github.com/chrisjurich/gas-packer.git`
 
+## Dependencies
+
+Python: python >= 3.0 (all development done in 3.8),numpy, pandas, matplotlib, matplotlib.mplot3d, matplotlib.animation
+C++: C++17, CMake,(optional) Ninja
+System: ffmpeg
+
 ### Native C++
 This project is built using C++17 as well as CMake and Ninja. It will compile with clang or gcc. The following command compiles the source code:
 
@@ -73,5 +79,5 @@ See the commandline options below:
   -move_dist MOVE_DIST  Maximum distance that any one atom can move in a direction. MUST be > 0
 
 ```
-
+An example command is `python src/anim.py -video my_video.mp4`
 ## Common Problems
