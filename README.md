@@ -15,7 +15,7 @@ Python: python >= 3.0 (all development done in 3.8), numpy, pandas, matplotlib, 
 
 C++: C++17, CMake, (optional) Ninja
 
-System: ffmpeg
+System: ffmpeg, Python devkit (varies with platform)
 
 ### Native C++
 This project is built using C++17 as well as CMake and Ninja. It will compile with clang or gcc. The following command compiles the source code:
@@ -27,7 +27,7 @@ If you do not want to compile the CJ-GAS-PACKER executable, you can pass the opt
 If you are having issues with this step, deleting `CMakeCache.txt` will often help.
 
 ### Python Bindings
-This project also supports python bindings with [pybind11](https://github.com/pybind/pybind11). This installation requires CMake, a working compiler and is only tested for python3. To install the bindings, use the following command:
+This project also supports python bindings with [pybind11](https://github.com/pybind/pybind11). This installation requires CMake, a working compiler and that you have the python devkit installed. Note it is only tested for python3. To install the bindings, use the following command:
 
 
 `$ pip install . --user`
@@ -89,3 +89,4 @@ An example command is `python src/anim.py -video my_video.mp4`
 ## Common Problems
 + If you are having problems with CMake, its usually a good idea to delete `CMakeCache.txt` and build from scratch.
 + The `src/anim.py` file will often fail if there are issues with ffmpeg. This typically occurs in the last step. If using Anaconda, this can be caused by a higher version of the .so library file being available than what is expected. This can be overcome by creating a symlink.
++ If you cannot get the python bindings to work, make sure that you have the python devkit installed for your operating system. 
