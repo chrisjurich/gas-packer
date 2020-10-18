@@ -96,7 +96,6 @@ GasBox::initialize() {
         // now make the GasAtomObject
         atoms.emplace_back(x,y,z,box_dims,atom_num);
     }
-   
     caluclate_distances();
 }
 
@@ -144,7 +143,7 @@ std::vector<std::vector<Position>>
 GasBox::moves() {
     auto positions = std::vector<std::vector<Position>>();
     positions.reserve(atoms.size()); 
-    
+
     for(const auto& atom : atoms ) {
         positions.push_back(atom.positions());
     }
@@ -216,9 +215,10 @@ GasBox::_move_atoms() {
 void
 GasBox::simulate() {
     initialize();
-    for (int step = 0; step < config_.num_atoms; ++step) {
+    for (int step = 0; step < config_.num_moves; ++step) {
         _move_atoms();
-
     }
-    to_csv();
+    if(config_.outfile != "NONE") {
+        to_csv();
+    }
 }

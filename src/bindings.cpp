@@ -14,7 +14,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(gas_packer, m) {
+PYBIND11_MODULE(cj_gas_packer, m) {
 
 //////////////////////////////////////////////////////////////////////////////////
 ////        gb_utils.h
@@ -93,16 +93,15 @@ PYBIND11_MODULE(gas_packer, m) {
         ;
     
     py::class_<GasBox,std::shared_ptr<GasBox>>(m,"GasBox")
-        //ctors 
+        // ctors
         .def(py::init<>())
-        .def(py::init<int,int,double,double,double,double,double,double,double,std::string>())
+        .def(py::init<int,int,int,double,double,double,double,double,double,double,std::string>())
         // methods
         .def("initialize",&GasBox::initialize)
         .def("caluclate_distances",&GasBox::caluclate_distances)
         .def("simulate",&GasBox::simulate)
         .def("to_csv",&GasBox::to_csv)
-        .def("moves",&GasBox::moves)
-        ;
+        .def("moves",&GasBox::moves);
 
 //////////////////////////////////////////////////////////////////////////////////
 ////        LJPotential.h

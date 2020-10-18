@@ -41,6 +41,7 @@ class GasBox{
         GasBox(
             int number_atoms,
             int rng_seed,
+            int num_moves,
             double x_min,
             double x_max,
             double y_min,
@@ -59,11 +60,12 @@ class GasBox{
             lj_potential(r_m,epsilon),
             mc_selector(MetropolisSelector())
             {
+                config_.num_moves = num_moves;
                 config_.rng_seed = rng_seed;
                 config_.num_atoms = number_atoms;
+
                 config_.move_dist = move_distance;
                 config_.outfile = std::move(outfile);
-                initialize();
             }
     public:
         void

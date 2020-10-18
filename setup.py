@@ -61,7 +61,7 @@ class CMakeBuild(build_ext):
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=self.build_temp)
 
 setup(
-    name='gas_packer',
+    name='cj_gas_packer',
     version='0.0.1',
     author='Chris Jurich',
     author_email='cjurich2@huskers.unl.edu',
