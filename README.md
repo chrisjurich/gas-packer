@@ -1,7 +1,7 @@
 # Gas Packer
 This is a toy project that packs a set of gas molcules into a box using a Monte Carlo algorithm and produces an animation.
 
-Example output: [Youtube](https://youtu.be/Z7GWBJKAAQQ)
+Example output: [Youtube](https://youtu.be/VBtpwaULHlw)
 ## Install
 
 There are two options for installation: native C++ code and python bindings.
