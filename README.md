@@ -21,7 +21,7 @@ System: ffmpeg
 This project is built using C++17 as well as CMake and Ninja. It will compile with clang or gcc. The following command compiles the source code:
 
 
-`$ cd build && cmake [-G Ninja] .. && [Ninja|Make]`
+`$ cmake [-G Ninja] .. && [Ninja|Make]`
 
 If you do not want to compile the CJ-GAS-PACKER executable, you can pass the option `-DCPP=OFF` during CMake generation.
 If you are having issues with this step, deleting `CMakeCache.txt` will often help.
