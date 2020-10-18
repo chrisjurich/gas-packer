@@ -39,6 +39,7 @@ The module can then be imported with:
 
 although the easier option is to use the `src/anim.py` script that already has the code setup.
 Note that the above pip statement MUST be called even if you are going to use the pre-created script.
+Again, problems with generating the bindings can often be resolved by deleting the `CMakeCache.txt` file.
 ## Running Simulations
 
 ### Native C++
