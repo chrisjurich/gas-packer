@@ -56,8 +56,8 @@ The performance of the program is highly tunable, and below are the commandline 
   --x_max FLOAT:NUMBER=10     The upper x bound of the gas box. MUST be larger than x_min.
   --y_min FLOAT:NUMBER=0      The lower y bound of the gas box. MUST be smaller than y_max.
   --y_max FLOAT:NUMBER=10     The upper y bound of the gas box. MUST be larger than y_min.
-  --z_min FLOAT:NUMBER=0      The upper z bound of the gas box. MUST be smaller than z_max.
-  --z_max FLOAT:NUMBER=10     The lower z bound of the gas box. MUST be larger than z_min.
+  --z_min FLOAT:NUMBER=0      The lower z bound of the gas box. MUST be smaller than z_max.
+  --z_max FLOAT:NUMBER=10     The upper z bound of the gas box. MUST be larger than z_min.
   --move_dist FLOAT:POSITIVE=1
 
 ```
