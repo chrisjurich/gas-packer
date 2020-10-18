@@ -125,9 +125,9 @@ def main(params):
     ax.w_zaxis.line.set_color((1.0, 1.0, 1.0, 0.0))  # Provide starting angle for the view.
 
     ani = animation.FuncAnimation(fig, animate_scatters, iterations, fargs=(data, scatters),
-                                  interval=50, blit=True, repeat=False)
+                                  interval=200, blit=True, repeat=False)
     Writer = animation.writers['ffmpeg']
-    writer = Writer(fps=30, metadata=dict(artist='Me'), bitrate=1800, extra_args=['-vcodec', 'libx264'])
+    writer = Writer(fps=15, metadata=dict(artist='Me'), bitrate=1800, extra_args=['-vcodec', 'libx264'])
     ani.save(params.video, writer=writer)
 
 
