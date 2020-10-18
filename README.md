@@ -10,7 +10,8 @@ Because this project uses pybind11 as a submodule, the cloning command is: `git 
 
 ## Dependencies
 
-Python: python >= 3.0 (all development done in 3.8),numpy, pandas, matplotlib, matplotlib.mplot3d, matplotlib.animation
+Python: python >= 3.0 (all development done in 3.8), numpy, pandas, matplotlib, matplotlib.mplot3d, matplotlib.animation
+
 C++: C++17, CMake,(optional) Ninja
 System: ffmpeg
 
