@@ -75,11 +75,11 @@ See the commandline options below:
   -video VIDEO          The file where the video will be saved
   -num_atoms NUM_ATOMS  The number of atoms in the GasBox. Default is 100. Larger numbers will lead to slower runtimes.
   -x_min X_MIN          Lower x bound. MUST be less than x_max
-  -x_max X_MAX          Lower x bound. MUST be greater than x_min
+  -x_max X_MAX          Upper x bound. MUST be greater than x_min
   -y_min Y_MIN          Lower y bound. MUST be less than y_max
-  -y_max Y_MAX          Lower y bound. MUST be greater than y_min
+  -y_max Y_MAX          Upper y bound. MUST be greater than y_min
   -z_min Z_MIN          Lower z bound. MUST be less than z_max
-  -z_max Z_MAX          Lower z bound. MUST be greater than z_min
+  -z_max Z_MAX          Upper z bound. MUST be greater than z_min
   -rng_seed RNG_SEED    The number to which the System's random number generator will be seeded
   -num_moves NUM_MOVES  The number of moves that each atom will make. Larger numbers will lead to slower runtimes.
   -move_dist MOVE_DIST  Maximum distance that any one atom can move in a direction. MUST be > 0
