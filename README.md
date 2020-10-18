@@ -9,7 +9,7 @@ Using python is recommended as this allows the user to easily generate an .mp4 a
 
 Because this project uses pybind11 as a submodule, the cloning command is: `git clone --recurse-submodules https://github.com/chrisjurich/gas-packer.git`
 
-## Dependencies
+### Dependencies
 
 Python: python >= 3.0 (all development done in 3.8), numpy, pandas, matplotlib, matplotlib.mplot3d, matplotlib.animation
 
