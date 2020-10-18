@@ -1,12 +1,17 @@
 cmake_minimum_required(VERSION 3.0)
-project(ideal_gas_simulation)
-
-include_directories(src/)
-
+project(CJ-GAS-PACKER)
 set(CMAKE_CXX_STANDARD 17)
 
+find_package (Python COMPONENTS Interpreter Development)
+
+# all files are withing src/
+include_directories(src/)
+include_directories(src/external/)
+add_subdirectory(pybind11/)
+# need to set the pybind11 directory
+set(pybind11_DIR pybind11/)
+
 set( src_files
-        src/Config.h
         src/GasAtom.cpp
         src/GasBox.cpp
         src/gb_utils.cpp
@@ -14,21 +19,11 @@ set( src_files
         src/LJPotential.cpp
         src/Metropolis.cpp
         )
+# this is the C++ executable
+add_library( gas_engine ${src_files})
+add_executable( CJ-GAS-PACKER src/main.cpp)
+target_link_libraries( CJ-GAS-PACKER gas_engine)
 
-add_library( ideal_gas_engine ${src_files})
-
-#target_link_libraries( ideal_gas_engine )
-
-
-add_executable( ideal_gas_simulator src/main.cpp)
-
-target_link_libraries (ideal_gas_simulator ideal_gas_engine)
-
-
-#add_subdirectory(pybind11/)
-find_package(pybind11)
-
-pybind11_add_module( gas_packer ${src_files} src/bindings.cpp )
-
-target_link_libraries( gas_packer PUBLIC ideal_gas_engine)
-
+# this is the python module
+pybind11_add_module( cj_gas_packer ${src_files} src/bindings.cpp )
+target_link_libraries( cj_gas_packer PUBLIC gas_engine)

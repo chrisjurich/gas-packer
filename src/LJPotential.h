@@ -1,11 +1,11 @@
 #ifndef __LJ_POTENTIAL_H_
 #define __LJ_POTENTIAL_H_
 
-#include<cmath>
-#include<limits>
+#include <cmath>
+#include <limits>
 
-#include<GasAtom.h>
-#include<gb_utils.h>
+#include <GasAtom.h>
+#include <gb_utils.h>
 
 class LennardJonesPotential{
     private:

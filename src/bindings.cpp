@@ -1,40 +1,27 @@
+// C++ library includes
+#include <memory>
+// pybind includes
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/operators.h>
-#include <memory>
-
+// gas packer includes
 #include <gb_utils.h>
 #include <GasAtom.h>
 #include <GasBox.h>
 #include <GBConfig.h>
-//static const double epsilon(1.);
-//static const double r_m(1.);
-//static const double e(2.7182818284590452353602874);
-//static const double R(8.3144621);
-//static const double vdw_radius(0.01);
-//
-//namespace std {
-//    template <typename T1,typename T2> 
-//    struct hash<pair<T1,T2>>  {
-//        size_t
-//        operator()(const pair<T1,T2>& input_pair)const {
-//            return hash<T1>()(input_pair.first)^hash<T2>()(input_pair.second);
-//        }
-//    };
-//}
-//
-//double
-//rms_velocity(double, double ,double );
-//
-
-
-
+#include <LJPotential.h>
+#include <Metropolis.h>
 
 namespace py = pybind11;
 
 PYBIND11_MODULE(gas_packer, m) {
 
+//////////////////////////////////////////////////////////////////////////////////
+////        gb_utils.h
+//////////////////////////////////////////////////////////////////////////////////
     py::register_exception<BadValue>(m,"BadValueException");
+
+    m.def("rms_velocity",rms_velocity);
 
     py::class_<Dimensions,std::shared_ptr<Dimensions>>(m,"Dimensions")
         .def(py::init<double,double,double,double,double,double>())
@@ -54,6 +41,9 @@ PYBIND11_MODULE(gas_packer, m) {
         .def_readwrite("max_distance",&BoxSnapShot::max_distance)
         ;
 
+//////////////////////////////////////////////////////////////////////////////////
+////        GasAtom.h
+//////////////////////////////////////////////////////////////////////////////////
     py::class_<Position,std::shared_ptr<Position>>(m,"Position")
         // ctors 
         .def(py::init<int,int,int>())
@@ -67,7 +57,6 @@ PYBIND11_MODULE(gas_packer, m) {
         .def(py::self += py::self)
         .def(py::self + py::self)
         ;
-
 
     py::class_<GasAtom,std::shared_ptr<GasAtom>>(m,"GasAtom")
         //ctors 
@@ -84,13 +73,10 @@ PYBIND11_MODULE(gas_packer, m) {
         .def(py::self += py::self) 
         ;
 
-//    friend std::ostream& operator<<(std::ostream& os, const GasAtom& GA)
-//    {
-//        os<<"atom id: "<<GA.atom_id<<" location ("<<GA.curr_pos.x<<","<<GA.curr_pos.y<<","<<GA.curr_pos.z<<")\n";
-//        return os;
-//    }
-//
-//};
+//////////////////////////////////////////////////////////////////////////////////
+////        GBConfig.h
+//////////////////////////////////////////////////////////////////////////////////
+
     py::class_<GasBoxConfig,std::shared_ptr<GasBoxConfig>>(m,"GasBoxConfig")
         .def(py::init<>())  
         .def_readwrite("num_atoms",&GasBoxConfig::num_atoms)
@@ -108,14 +94,37 @@ PYBIND11_MODULE(gas_packer, m) {
     
     py::class_<GasBox,std::shared_ptr<GasBox>>(m,"GasBox")
         //ctors 
+        .def(py::init<>())
         .def(py::init<int,int,double,double,double,double,double,double,double,std::string>())
-        .def(py::init<GasBoxConfig const &>())
-        // methods    
+        // methods
         .def("initialize",&GasBox::initialize)
         .def("caluclate_distances",&GasBox::caluclate_distances)
         .def("simulate",&GasBox::simulate)
         .def("to_csv",&GasBox::to_csv)
         .def("moves",&GasBox::moves)
+        ;
+
+//////////////////////////////////////////////////////////////////////////////////
+////        LJPotential.h
+//////////////////////////////////////////////////////////////////////////////////
+
+    py::class_<LennardJonesPotential,std::shared_ptr<LennardJonesPotential>>(m,"LennardJonesPotential")
+        // ctors
+        .def(py::init<const double&,const double&>())
+        // methods
+        .def("energy", [] (LennardJonesPotential& lj, const double e) -> double {return lj.energy(e);})
+        .def("energy", [] (LennardJonesPotential& lj, const GasAtom& g1, const GasAtom& g2) -> double { return lj.energy(g1, g2); })
+        ;
+
+//////////////////////////////////////////////////////////////////////////////////
+////        Metropolis.h
+//////////////////////////////////////////////////////////////////////////////////
+
+    py::class_<MetropolisSelector,std::shared_ptr<MetropolisSelector>>(m, "MetropolisSelector")
+        // ctors
+        .def(py::init<>())
+        //methods
+        .def("accept", &MetropolisSelector::accept_move)
         ;
 
 }

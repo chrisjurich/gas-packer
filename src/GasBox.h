@@ -14,11 +14,13 @@
 #include <Metropolis.h>
 #include <GBConfig.h>
 
+#include <CLI/CLI.hpp>
+
 class GasBox{
     private:
-        Dimensions box_dims;
+        GasBoxConfig config_;
     private:
-        int number_atoms, rng_seed;
+        Dimensions box_dims;
     private:
         std::vector<GasAtom> atoms;
     private:
@@ -28,15 +30,17 @@ class GasBox{
     private:
         MetropolisSelector mc_selector;
     private:
-        double move_distance;
-    private:
         std::vector<BoxSnapShot> states;
-    private: 
-        std::string outfile;
+    public:
+        GasBox( ) : lj_potential(r_m,epsilon),
+                    mc_selector(MetropolisSelector())
+                   {
+
+                   }
     public:
         GasBox(
             int number_atoms,
-            int rng_seed, 
+            int rng_seed,
             double x_min,
             double x_max,
             double y_min,
@@ -45,50 +49,26 @@ class GasBox{
             double z_max,
             double move_distance,
             std::string outfile
-               ) : number_atoms(number_atoms), rng_seed(rng_seed),
-                    box_dims(Dimensions(x_min,
-                                        x_max,
-                                        y_min,
-                                        y_max,
-                                        z_min,
-                                        z_max)),
-                    lj_potential(r_m,epsilon),
-                    mc_selector(MetropolisSelector()),
-                    move_distance(move_distance),
-                    outfile(outfile)
-                   {
-                    // seeding the rng 
-                    srand(rng_seed);
-                    // reserving the appropriate size for the last_distances umap
-                    last_distances.reserve(
-                        number_atoms*(number_atoms-1)/2
-                            );
-                   }
-        
-        GasBox(GasBoxConfig const& config) :
-                number_atoms(config.num_atoms),
-                rng_seed(config.rng_seed),
-                box_dims(Dimensions(
-                                    config.x_min,
-                                    config.x_max,
-                                    config.y_min,
-                                    config.y_max,
-                                    config.z_min,
-                                    config.z_max)),
-                lj_potential(r_m,epsilon),
-                mc_selector(MetropolisSelector()),
-                move_distance(config.move_dist),
-                outfile(config.outfile)
-                {
-                    // seeding the rng 
-                    srand(rng_seed);
-                    // reserving the appropriate size for the last_distances umap
-                    last_distances.reserve(
-                        number_atoms*(number_atoms-1)/2
-                            );
-            
-                }
-        
+        ) :
+            box_dims(Dimensions(x_min,
+                            x_max,
+                            y_min,
+                            y_max,
+                            z_min,
+                            z_max)),
+            lj_potential(r_m,epsilon),
+            mc_selector(MetropolisSelector())
+            {
+                config_.rng_seed = rng_seed;
+                config_.num_atoms = number_atoms;
+                config_.move_dist = move_distance;
+                config_.outfile = std::move(outfile);
+                initialize();
+            }
+    public:
+        void
+        setup_options();
+
     public:
         void
         initialize();
@@ -99,7 +79,7 @@ class GasBox{
     
     public:
         void
-        simulate(int);
+        simulate();
 
     public:
         void
@@ -113,6 +93,8 @@ class GasBox{
         void
         _move_atoms();
 
+    public:
+        CLI::App app_;
 };
 
 

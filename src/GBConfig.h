@@ -1,8 +1,8 @@
 #ifndef __GB_CONFIG_H__
 #define __GB_CONFIG_H__
 
-#include<string>
-#include<iostream>
+#include <string>
+#include <iostream>
 
 struct GasBoxConfig {
     std::string outfile ;
@@ -26,7 +26,7 @@ struct GasBoxConfig {
         x_min(0.),
         x_max(10.),
         y_min(0.),
-        y_max(0.),
+        y_max(10.),
         z_min(0.),
         z_max(10.),
         move_dist(1) {}

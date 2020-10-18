@@ -56,9 +56,6 @@ class GasAtom {
     private:
         std::vector<Position> past_position;
 
-    //public:
-    //    GasAtom() : atom_id(0),
-    //                curr_pos(Position()) {}
     public:
         GasAtom(
                 double x,

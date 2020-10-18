@@ -4,12 +4,9 @@
 
 
 int main(int argc, char** argv) {
-    
-    auto config = GasBoxConfig();
-    config.parse_command_line(argc,argv);
-    
-    auto gb = GasBox(config); 
-    gb.initialize();
-    gb.simulate(config.num_moves);
-    gb.to_csv();
+
+    auto gb = GasBox();
+    gb.setup_options();
+    CLI11_PARSE(gb.app_,argc,argv);
+    gb.simulate();
 }
