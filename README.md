@@ -1,6 +1,7 @@
 # Gas Packer
 This is a toy project that packs a set of gas molcules into a box and produces an animation.
 
+Example output: [Youtube](https://youtu.be/Z7GWBJKAAQQ)
 ## Install
 
 There are two options for installation: native C++ code and python bindings.
@@ -60,6 +61,8 @@ The performance of the program is highly tunable, and below are the commandline 
 ```
 To see the above options in the terminal, run the command `./CJ-GAS-PACKER --help`.
 Once a run is complete, results can be found in the path specified by `--outfile`
+
+An example command is `./CJ-GAS-PACKER --outfile my_data.csv`
 ### Python Bindings
 
 The easiest way to run the gas packer is via the python bindings.
@@ -82,3 +85,5 @@ See the commandline options below:
 ```
 An example command is `python src/anim.py -video my_video.mp4`
 ## Common Problems
++ If you are having problems with CMake, its usually a good idea to delete `CMakeCache.txt` and build from scratch.
++ The `src/anim.py` file will often fail if there are issues with ffmpeg. This typically occurs in the last step. If using Anaconda, this can be caused by a higher version of the .so library file being available than what is expected. This can be overcome by creating a symlink.
