@@ -4,7 +4,9 @@ This is a toy project that packs a set of gas molcules into a box and produces a
 ## Install
 
 There are two options for installation: native C++ code and python bindings.
-Using python is recommended as this allows the user to easily generate an .mp4 animation.
+Using python is recommended as this allows the user to easily generate an .mp4 animation. 
+
+Because this project uses pybind11 as a submodule, the cloning command is: `git clone --recurse-submodules https://github.com/chrisjurich/gas-packer.git`
 
 ### Native C++
 This project is built using C++17 as well as CMake and Ninja. It will compile with clang or gcc. The following command compiles the source code:
